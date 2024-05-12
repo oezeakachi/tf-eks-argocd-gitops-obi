@@ -6,5 +6,5 @@ output "subnet_ids" {
   value = aws_subnet.subnet[*].id
 }
 output "rta" {
-  value = aws_route_table_association.rta.id
+  value = aws_route_table_association.rta[*].id
 }
