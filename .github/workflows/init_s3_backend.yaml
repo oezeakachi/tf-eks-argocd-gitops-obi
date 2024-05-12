@@ -80,6 +80,6 @@ jobs:
       - name: Restore Backend Config 
         if: env.BUCKET_EXISTS == 'false'
         run: |
-          mv ./state_management/backend.tf.backup ./state_management/backend.tf || true
+          mv ./backend/backend.tf.backup ./backend/backend.tf || true
         working-directory: .
   
