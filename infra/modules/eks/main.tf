@@ -24,7 +24,7 @@ resource "aws_eks_cluster" "cluster" {
 resource "kubernetes_config_map" "aws_auth" {
   depends_on = [
     aws_eks_cluster.cluster,
-    aws_iam_role.eks_node_role
+    var.eks_node_role
   ]
 
   metadata {
@@ -34,16 +34,16 @@ resource "kubernetes_config_map" "aws_auth" {
 
   data = {
     mapRoles = yamlencode([{
-      rolearn  = aws_iam_role.eks_cluster_role.arn
+      rolearn  = var.eks_cluster_role_arn
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = ["system:bootstrappers", "system:nodes"]
       }, {
-      rolearn  = aws_iam_role.eks_node_role.arn
+      rolearn  = var.eks_node_role_arn
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = ["system:bootstrappers", "system:nodes"]
       }, {
-      rolearn  = aws_iam_role.eks_cluster_role.arn
-      username = "my_eks_cluster_role"
+      rolearn  = var.eks_cluster_role_arn
+      username = "eks_cluster_role"
       groups   = ["system:masters"]
     }])
   }
@@ -51,10 +51,9 @@ resource "kubernetes_config_map" "aws_auth" {
 # EKS Node Group
 resource "aws_eks_node_group" "node_group" {
   cluster_name    = aws_eks_cluster.cluster.name
-  node_group_name = "my_eks_node_group"
-  node_role_arn   = aws_iam_role.eks_node_role.arn
-  subnet_ids      = aws_subnet.subnet[*].id
-
+  node_group_name = "eks_node_group"
+  node_role_arn   = var.eks_node_role_arn
+  subnet_ids      = var.subnet_ids
   scaling_config {
     desired_size = var.desired_nodes
     max_size     = var.max_nodes

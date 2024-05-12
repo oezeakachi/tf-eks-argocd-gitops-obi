@@ -25,6 +25,8 @@ module "eks" {
   vpc_id = module.networking.vpc_id
   subnet_ids = module.networking.subnet_ids
     role_arn = module.roles.eks_cluster_role_arn
+    eks_node_role = module.roles.eks_node_role
+    eks_cluster_role_arn = module.roles.eks_cluster_role_arn
     eks_cluster_policy = module.roles.eks_cluster_policy
     eks_vpc_resource_controller = module.roles.eks_vpc_resource_controller
     rta = module.networking.rta

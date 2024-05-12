@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "eks_vpc_resource_controller" {
 
 # IAM role for EKS node group
 resource "aws_iam_role" "eks_node_role" {
-  name = "my_eks_node_role"
+  name = "eks_node_role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [

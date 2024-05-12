@@ -60,3 +60,22 @@ variable "rta" {
   type        = string
 }
 
+#EKS NODE ROLE
+variable "eks_node_role" {
+  description = "CLUSTER NODE ROLE"
+  type        = string
+}
+
+#EKS CLUSTER ROLE ARN
+variable "eks_cluster_role_arn" {
+  description = "EKS CLUSTER ROLE ARN"
+  type        = string
+}
+
+#EKS NODE ROLE ARN
+variable "eks_node_role_arn" {
+  description = "EKS CLUSTER ROLE ARN"
+  type        = string
+}
+
+
