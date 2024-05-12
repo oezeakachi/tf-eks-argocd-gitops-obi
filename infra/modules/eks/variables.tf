@@ -37,7 +37,7 @@ variable "role_arn" {
 # SUBNET ID 
 variable "subnet_ids" {
   description = "SUBNET IDS"
-  type        = List(number)
+  type        = any
 }
 
 
