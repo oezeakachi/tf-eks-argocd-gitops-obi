@@ -33,17 +33,14 @@ jobs:
             run: terraform plan
             working-directory: ./infra
 
-          - name: Terraform Apply 
-            run: terraform apply -auto-approve
-            working-directory: ./infra
+          # - name: Terraform Apply 
+          #   run: terraform apply -auto-approve
+          #   working-directory: ./infra
           
-          - name: Capture EKS Cluster Name
-            run: |
-              output=$(terraform output -json)
-              echo "CLUSTER_NAME=$(echo "$output" | jq -r '.cluster_name.value')" >> $GITHUB_ENV
-            working-directory: ./infra
+          # - name: Capture EKS Cluster Name
+          #   run: |
+          #     output=$(terraform output -json)
+          #     echo "CLUSTER_NAME=$(echo "$output" | jq -r '.cluster_name.value')" >> $GITHUB_ENV
+          #   working-directory: ./infra
 
           
-          
-        
-        

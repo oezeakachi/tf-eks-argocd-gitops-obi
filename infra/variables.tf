@@ -17,3 +17,33 @@ variable "availability_zones" {
   type        = list(string)
   default     = ["eu-west-1a", "eu-west-1b"]
 }
+
+
+# Name of the EKS cluster
+variable "cluster_name" {
+  description = "Name of the EKS cluster"
+  type        = string
+  default     = "eks_cluster"
+}
+
+# Desired number of nodes in the EKS node group
+variable "desired_nodes" {
+  description = "Desired number of nodes in the node group"
+  type        = number
+  default     = 2
+}
+
+# Maximum number of nodes in the EKS node group
+variable "max_nodes" {
+  description = "Maximum number of nodes in the node group"
+  type        = number
+  default     = 3
+}
+
+# Minimum number of nodes in the EKS node group
+variable "min_nodes" {
+  description = "Minimum number of nodes in the node group"
+  type        = number
+  default     = 1
+}
+
