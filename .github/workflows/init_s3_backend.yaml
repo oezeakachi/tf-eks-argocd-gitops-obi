@@ -1,0 +1,85 @@
+name: Setup Terraform State
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-terraform-backend:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pull-requests: write
+      statuses: write
+      actions: read
+      contents: read
+    env:
+      BUCKET_NAME: remote-rayen-tfstate
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.PIPELINE_ROLE }}
+          aws-region: eu-west-1 
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+      
+      - name: Check if S3 Bucket Exists
+        id: check-bucket
+        run: |
+          if aws s3 ls "s3://${{ env.BUCKET_NAME }}" 2>&1 | grep -q 'NoSuchBucket'; then
+            echo "S3 Bucket does not exist"
+            echo "BUCKET_EXISTS=false" >> $GITHUB_ENV
+          else
+            echo "S3 Bucket exists"
+            echo "BUCKET_EXISTS=true" >> $GITHUB_ENV
+          fi
+
+      - name: Prepare Backend Config 
+        if: env.BUCKET_EXISTS == 'false'
+        run: |
+          mv ./backend/backend.tf ./backend/backend.tf.backup || true
+        working-directory: .
+      
+      - name: Format code
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Init if S3 Bucket doesn't exist
+        if: env.BUCKET_EXISTS == 'false'
+        run: terraform init
+        working-directory: ./backend
+      
+      - name: Validate
+        id: validate
+        run: terraform validate -no-color
+      
+      - name: Plan 
+        id: plan
+        if: env.BUCKET_EXISTS == 'false'
+        run: terraform plan -no-color -input=false
+        working-directory: ./backend 
+        continue-on-error: true
+
+      - name: Apply 
+        if: env.BUCKET_EXISTS == 'false'
+        run: terraform apply -auto-approve
+        working-directory: ./backend
+
+      - name: Capture S3 Bucket Name
+        if: env.BUCKET_EXISTS == 'false'
+        run: |
+          output=$(terraform output -json)
+          echo "BUCKET_NAME=$(echo "$output" | jq -r '.bucket_name.value')" >> $GITHUB_ENV
+        working-directory: ./backend
+      
+      - name: Restore Backend Config 
+        if: env.BUCKET_EXISTS == 'false'
+        run: |
+          mv ./state_management/backend.tf.backup ./state_management/backend.tf || true
+        working-directory: .
+  
