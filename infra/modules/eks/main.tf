@@ -1,8 +1,11 @@
 # Networking module
 
 module "networking" {
-  source = "./networking"
+  source = "../networking"
   # Pass any required variables to the networking module
+  vpc_cidr = var.vpc_cidr
+  subnet_cidrs = var.subnet_cidrs
+  availability_zones = var.availability_zones
 }
 
 # Security group for the EKS cluster
