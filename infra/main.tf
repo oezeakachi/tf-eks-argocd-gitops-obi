@@ -18,7 +18,6 @@ module "roles" {
 module "eks" {
   source = "./modules/eks"
   # Pass any required variables to the networking module
-  vpc_id = var.vpc_id
   cluster_name  = var.cluster_name
   desired_nodes = var.desired_nodes
   max_nodes     = var.max_nodes

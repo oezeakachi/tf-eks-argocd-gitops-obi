@@ -2,7 +2,7 @@
 resource "aws_security_group" "eks_cluster_sg" {
   name        = "eks_cluster_sg"
   description = "Security group for EKS cluster"
-  vpc_id      = var.vpc_id
+  vpc_id      = module.networking.vpc_id
 }
 
 # EKS Cluster
