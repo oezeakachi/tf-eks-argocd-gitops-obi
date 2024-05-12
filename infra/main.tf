@@ -30,7 +30,7 @@ module "eks" {
     eks_cluster_role_arn = module.roles.eks_cluster_role_arn
     eks_cluster_policy = module.roles.eks_cluster_policy
     eks_vpc_resource_controller = module.roles.eks_vpc_resource_controller
-    rta = module.networking.rta
+    rta = module.networking.rta[*]
   depends_on = [module.roles,
     module.networking
   ]
