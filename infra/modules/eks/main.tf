@@ -1,39 +1,22 @@
-# Networking module
-
-module "networking" {
-  source = "../networking"
-  # Pass any required variables to the networking module
-  vpc_cidr = var.vpc_cidr
-  subnet_cidrs = var.subnet_cidrs
-  availability_zones = var.availability_zones
-}
-
-module "roles" {
-  source = "../roles"
-  # Pass any required variables to the networking module
-
-}
-
-
 # Security group for the EKS cluster
 resource "aws_security_group" "eks_cluster_sg" {
   name        = "eks_cluster_sg"
   description = "Security group for EKS cluster"
-  vpc_id      = module.networking.vpc_id
+  vpc_id      = var.vpc_id
 }
 
 # EKS Cluster
 resource "aws_eks_cluster" "cluster" {
   name     = var.cluster_name
-  role_arn = module.roles.eks_cluster_role_arn
+  role_arn = var.role_arn
   vpc_config {
     security_group_ids = [aws_security_group.eks_cluster_sg.id]
-    subnet_ids         = module.networking.subnet_ids
+    subnet_ids         = var.subnet_ids
   }
   depends_on = [
-    module.roles.eks_cluster_policy,
-    module.roles.eks_vpc_resource_controller,
-    module.networking.rta
+    var.eks_cluster_policy,
+    var.eks_vpc_resource_controller,
+    var.rta
   ]
 }
 

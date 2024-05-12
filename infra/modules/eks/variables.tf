@@ -22,27 +22,41 @@ variable "min_nodes" {
   type        = number
 }
 
-
-####### Networking #########
-
-# CIDR block for the VPC
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
+# VPC ID 
+variable "vpc_id" {
+  description = "VPC ID"
   type        = string
-  default     = "10.0.0.0/16"
-}
-# CIDR blocks for the subnets
-variable "subnet_cidrs" {
-  description = "List of CIDR blocks for the subnets"
-  type        = list(string)
-  default     = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
-# Availability zones for the subnets
-variable "availability_zones" {
-  description = "List of availability zones"
-  type        = list(string)
-  default     = ["eu-west-1a", "eu-west-1b"]
+# ROLE ARN
+variable "role_arn" {
+  description = "ROLE ARN"
+  type        = string
 }
 
+# SUBNET ID 
+variable "subnet_ids" {
+  description = "SUBNET IDS"
+  type        = List(number)
+}
+
+
+# EKS CLUSTER POLICY
+variable "eks_cluster_policy" {
+  description = "EKS CLUSTER POLICY"
+  type        = string
+}
+
+# EKS VPC RESOURCE CONTROLLER
+variable "eks_vpc_resource_controller" {
+  description = "EKS VPC CLUSTER CONTROLLER"
+  type        = string
+
+}
+
+# ROUTE TABLE ASSOCIATION
+variable "rta" {
+  description = "ROUTE TABLE ASSOCIATION"
+  type        = string
+}
 
