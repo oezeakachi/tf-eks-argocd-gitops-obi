@@ -1,10 +1,8 @@
-# main.tf
-
 # Security group for the EKS cluster
 resource "aws_security_group" "eks_cluster_sg" {
   name        = "eks_cluster_sg"
   description = "Security group for EKS cluster"
-  vpc_id      = module.networking.vpc
+  vpc_id      = var.vpc_id
 }
 
 # EKS Cluster

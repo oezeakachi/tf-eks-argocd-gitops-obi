@@ -22,4 +22,9 @@ variable "min_nodes" {
   type        = number
 }
 
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+
 
