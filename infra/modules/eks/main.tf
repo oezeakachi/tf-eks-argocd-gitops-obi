@@ -1,3 +1,10 @@
+# Networking module
+
+module "networking" {
+  source = "./networking"
+  # Pass any required variables to the networking module
+}
+
 # Security group for the EKS cluster
 resource "aws_security_group" "eks_cluster_sg" {
   name        = "eks_cluster_sg"
