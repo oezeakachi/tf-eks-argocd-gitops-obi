@@ -57,7 +57,7 @@ variable "eks_vpc_resource_controller" {
 # ROUTE TABLE ASSOCIATION
 variable "rta" {
   description = "ROUTE TABLE ASSOCIATION"
-  type        = string
+  type        = any
 }
 
 #EKS NODE ROLE
