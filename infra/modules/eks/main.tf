@@ -8,6 +8,13 @@ module "networking" {
   availability_zones = var.availability_zones
 }
 
+module "roles" {
+  source = "../roles"
+  # Pass any required variables to the networking module
+
+}
+
+
 # Security group for the EKS cluster
 resource "aws_security_group" "eks_cluster_sg" {
   name        = "eks_cluster_sg"
