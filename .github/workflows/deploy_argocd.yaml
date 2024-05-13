@@ -1,0 +1,39 @@
+name: Deploy ArgoCD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-argocd:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials 
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.PIPELINE_ROLE }}
+          aws-region: eu-west-1
+
+      - name: Set up Terraform 
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./argocd
+
+      - name: Terraform Plan 
+        run: terraform plan
+        working-directory: ./argocd
+
+      - name: Terraform Apply 
+        run: terraform apply -auto-approve
+        working-directory: ./argocd
+      
+
+ 

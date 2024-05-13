@@ -9,3 +9,8 @@ output "cluster_certificate_authority" {
 output "cluster_auth_token" {
   value = data.aws_eks_cluster_auth.cluster.token
 }
+
+
+output "cluster_name" {
+  value = data.aws_eks_cluster.cluster
+}
