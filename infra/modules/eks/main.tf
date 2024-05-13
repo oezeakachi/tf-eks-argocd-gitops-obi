@@ -19,6 +19,14 @@ resource "aws_eks_cluster" "cluster" {
     var.rta
   ]
 }
+data "aws_eks_cluster" "cluster" {
+  name = aws_eks_cluster.cluster.name
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = aws_eks_cluster.cluster.name
+}
+
 
 # ConfigMap aws-auth for EKS
 resource "kubernetes_config_map" "aws_auth" {
@@ -66,3 +74,4 @@ resource "aws_eks_node_group" "node_group" {
     aws_eks_cluster.cluster
   ]
 }
+
