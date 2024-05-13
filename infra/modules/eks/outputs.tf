@@ -11,5 +11,5 @@ output "cluster_auth_token" {
 }
 
 output "cluster_name" {
-  value =  aws_eks_cluster.cluster.name
+  value =  data.aws_eks_cluster.cluster.name
 }
