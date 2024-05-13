@@ -44,6 +44,3 @@ jobs:
             working-directory: ./infra
 
           
-          
-        
-        
