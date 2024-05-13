@@ -28,6 +28,10 @@ jobs:
         run: terraform init
         working-directory: ./infra
 
-      - name: Terraform Destroy 
+      - name: Terraform Destroy Argo Resources
+        run: terraform destroy -auto-approve
+        working-directory: ./argocd
+
+      - name: Terraform Destroy Infra Resources
         run: terraform destroy -auto-approve
         working-directory: ./infra
