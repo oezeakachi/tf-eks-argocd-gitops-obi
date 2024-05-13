@@ -19,7 +19,7 @@ data "terraform_remote_state" "infra" {
   }
 }
 data "aws_eks_cluster_auth" "cluster" {
-  name = data.terraform_remote_state.infra.outputs.cluster_name
+  name = data.terraform_remote_state.infra.outputs.cluster_name.name
 }
 provider "kubernetes" {
   host                   = data.terraform_remote_state.infra.outputs.cluster_endpoint
