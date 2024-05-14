@@ -24,13 +24,13 @@ jobs:
         with:
           terraform_wrapper: false
 
-      # - name: Terraform Init Argo 
-      #   run: terraform init
-      #   working-directory: ./argocd
+      - name: Terraform Init Argo 
+        run: terraform init
+        working-directory: ./argocd
 
-      # - name: Terraform Destroy Argo Resources
-      #   run: terraform destroy -auto-approve
-      #   working-directory: ./argocd
+      - name: Terraform Destroy Argo Resources
+        run: terraform destroy -auto-approve
+        working-directory: ./argocd
 
       - name: Terraform Init Infra
         run: terraform init

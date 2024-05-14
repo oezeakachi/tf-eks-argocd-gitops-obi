@@ -1,0 +1,27 @@
+name: Deploy ArgoCD Application
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-argocd-application:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure AWS Credentials 
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.PIPELINE_ROLE }}
+          aws-region: eu-west-1
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name eks_cluster --region eu-west-1
+
+      - name: Apply ArgoCD Application Manifest
+        run: kubectl apply -f ./argocd/manifest.yaml
