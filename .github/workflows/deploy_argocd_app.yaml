@@ -27,4 +27,4 @@ jobs:
           aws eks update-kubeconfig --name eks_cluster --region eu-west-1
 
       - name: Apply ArgoCD Application Manifest
-        run: kubectl apply -f ./argocd/manifest.yaml
+        run: kubectl apply -f ./argocd/manifests/manifest.yaml
