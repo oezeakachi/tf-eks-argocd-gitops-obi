@@ -18,19 +18,20 @@ data "terraform_remote_state" "infra" {
     region = "eu-west-1"
   }
 }
-data "aws_eks_cluster_auth" "cluster" {
-  name = data.terraform_remote_state.infra.outputs.cluster_name
-}
+# data "aws_eks_cluster_auth" "cluster" {
+#   name = data.terraform_remote_state.infra.outputs.eks_cluster_name
+# }
 provider "kubernetes" {
-  host                   = data.terraform_remote_state.infra.outputs.cluster_endpoint
-  cluster_ca_certificate = base64decode(data.terraform_remote_state.infra.outputs.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
+  host                   = data.terraform_remote_state.infra.outputs.eks_cluster_endpoint
+  cluster_ca_certificate = base64decode(data.terraform_remote_state.infra.outputs.cluster_certificate_authority)
+  token                  = data.terraform_remote_state.infra.outputs.cluster_auth_token
 }
 
 provider "helm" {
   kubernetes {
-    host                   = data.terraform_remote_state.infra.outputs.cluster_endpoint
-    cluster_ca_certificate = base64decode(data.terraform_remote_state.infra.outputs.cluster_certificate_authority_data)
-    token                  = data.aws_eks_cluster_auth.cluster.token
+    host                   = data.terraform_remote_state.infra.outputs.eks_cluster_endpoint
+    cluster_ca_certificate = base64decode(data.terraform_remote_state.infra.outputs.cluster_certificate_authority)
+    token                  = data.terraform_remote_state.infra.outputs.cluster_auth_token
   }
 }
+
