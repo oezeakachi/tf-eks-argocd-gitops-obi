@@ -54,9 +54,9 @@ resource "kubernetes_config_map" "aws_auth" {
       username = "eks_cluster_role"
       groups   = ["system:masters"]
     }])
-    mapAccounts = yamlencode([
+    mapUsers = yamlencode([
       {
-        userarn  = "arn:aws:iam::${var.aws_account_id}:user/${var.iam_user}"
+        userarn  = "arn:aws:iam::${var.aws_account_id}:${var.iam_user}"
         username = var.iam_user
         groups   = ["system:masters"]
       }
@@ -76,7 +76,7 @@ resource "aws_eks_node_group" "node_group" {
     min_size     = var.min_nodes
   }
 
-  instance_types = ["t3.medium"]
+  instance_types = ["t3.small"]
 
   depends_on = [
     aws_eks_cluster.cluster
