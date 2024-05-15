@@ -47,11 +47,13 @@ variable "min_nodes" {
   default     = 1
 }
 
+# AWS Account ID to configure for configmap auth
 variable "aws_account_id" {
   description = "AWS Account ID"
   type        = string
 }
 
+#AWS IAM User to configure for configmap auth
 variable "iam_user" {
   description = "IAM User"
   type        = string
