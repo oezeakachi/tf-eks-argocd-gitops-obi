@@ -54,7 +54,7 @@ resource "kubernetes_config_map" "aws_auth" {
       username = "eks_cluster_role"
       groups   = ["system:masters"]
     }])
-    mapUsers = yamlencode([
+    mapAccounts = yamlencode([
       {
         userarn  = "arn:aws:iam::${var.aws_account_id}:user/${var.iam_user}"
         username = var.iam_user
