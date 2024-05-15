@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Configure AWS Credentials 
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.PIPELINE_ROLE }}
           aws-region: eu-west-1
@@ -23,14 +23,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_wrapper: false
-
-      - name: Terraform Init Argo 
-        run: terraform init
-        working-directory: ./argocd
-
-      - name: Terraform Destroy Argo Resources
-        run: terraform destroy -auto-approve
-        working-directory: ./argocd
 
       - name: Terraform Init Infra
         run: terraform init
