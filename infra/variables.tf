@@ -47,4 +47,12 @@ variable "min_nodes" {
   default     = 1
 }
 
+variable "aws_account_id" {
+  description = "AWS Account ID"
+  type        = string
+}
 
+variable "iam_user" {
+  description = "IAM User"
+  type        = string
+}

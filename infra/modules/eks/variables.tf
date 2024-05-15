@@ -1,3 +1,12 @@
+variable "aws_account_id" {
+  description = "AWS Account ID"
+  type        = string
+}
+
+variable "iam_user" {
+  description = "IAM User"
+  type        = string
+}
 # Name of the EKS cluster
 variable "cluster_name" {
   description = "Name of the EKS cluster"

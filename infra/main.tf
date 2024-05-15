@@ -22,6 +22,8 @@ module "eks" {
   desired_nodes               = var.desired_nodes
   max_nodes                   = var.max_nodes
   min_nodes                   = var.min_nodes
+  aws_account_id              = var.aws_account_id
+  iam_user                    = var.iam_user
   vpc_id                      = module.networking.vpc_id
   subnet_ids                  = module.networking.subnet_ids
   role_arn                    = module.roles.eks_cluster_role_arn
