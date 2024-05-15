@@ -24,7 +24,6 @@ jobs:
         with:
           terraform_wrapper: false
 
-
       - name: Terraform Init Infra
         run: terraform init
         working-directory: ./infra
