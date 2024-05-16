@@ -34,15 +34,15 @@ jobs:
       
 
     - name: Build Docker image
-      run: docker build -t hello-world:latest .
+      run: docker build -t ryaanm/hello-world:latest .
       working-directory: ./app
 
     - name: Tag Docker image with GitHub SHA
-      run: docker tag hello-world:latest hello-world:${{ github.sha }}
+      run: docker tag ryaanm/hello-world:latest ryaanm/hello-world:${{ github.sha }}
       working-directory: ./app
 
     - name: Push Docker image
-      run: docker push hello-world:${{ github.sha }}
+      run: docker push ryaanm/hello-world:${{ github.sha }}
       working-directory: ./app
 
     # - name: Update deployment.yaml with new image version
