@@ -48,8 +48,7 @@ jobs:
     - name: Update deployment.yaml with new image version
       run: |
         ls
-        cd kube_manifest
-        sed -i "s|image: ryaanm/hello-world:.*|image: ryaanm/hello-world:$(git rev-parse --short HEAD)|" deployment.yaml
+        cd kube_manifest/ && sed -i "s|image: ryaanm/hello-world:.*|image: ryaanm/hello-world:$(git rev-parse --short HEAD)|" deployment.yaml
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add deployment.yaml
