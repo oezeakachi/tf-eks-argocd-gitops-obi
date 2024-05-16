@@ -63,7 +63,6 @@ jobs:
           propertyPath: 'spec.template.spec.containers[0].image'
           value: ryaanm/hello-world:$(git rev-parse --short HEAD)
           branch: dev
-          updateFile: true
           force: true
           masterBranchName: main
           targetBranch: dev
