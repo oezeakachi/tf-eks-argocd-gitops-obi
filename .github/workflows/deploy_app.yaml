@@ -70,6 +70,7 @@ jobs:
           createPR: false
           commitChange: true
           message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
+          token: ${{github.auth}}
 
 
          
