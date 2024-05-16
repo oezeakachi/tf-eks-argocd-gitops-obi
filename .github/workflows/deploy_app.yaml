@@ -56,9 +56,8 @@ jobs:
     #     git push origin dev
     #   working-directory: .
 
-    - name: Update Image Version 
-      uses: fjogeleit/yaml-update-action@main
-      
+    - name: YAML Update Action
+      uses: fjogeleit/yaml-update-action@v0.14.0
       with:
           valueFile: './kube_manifest/deployment.yaml'
           propertyPath: 'spec.template.spec.containers[0].image'
@@ -67,7 +66,10 @@ jobs:
           updateFile: true
           force: true
           masterBranchName: main
-          # targetBranch: development
+          targetBranch: dev
           createPR: false
           commitChange: true
           message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
+
+
+         
