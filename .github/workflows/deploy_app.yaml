@@ -60,7 +60,7 @@ jobs:
       uses: fjogeleit/yaml-update-action@main
       
       with:
-          valueFile: 'deployment.yaml'
+          valueFile: './kube_manifest/deployment.yaml'
           propertyPath: 'spec.template.spec.containers[0].image'
           value: ryaanm/hello-world:$(git rev-parse --short HEAD)
           branch: dev
@@ -69,4 +69,3 @@ jobs:
           createPR: false
           commitChange: true
           message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
-          working-directory: ./kube_manifest
