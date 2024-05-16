@@ -1,0 +1,47 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+
+    - name: Build with Maven
+      run: ./mvnw clean package
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: docker build -t hello-world:latest .
+
+    - name: Tag Docker image with GitHub SHA
+      run: docker tag hello-world:latest hello-world:${{ github.sha }}
+
+    - name: Push Docker image
+      run: docker push hello-world:${{ github.sha }}
+
+    - name: Update deployment.yaml with new image version
+      run: |
+        sed -i "s|image: ryaanm/hello-world:.*|image: ryaanm/hello-world:${{ github.sha }}|" ./kube_manifest/deployment.yaml
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add deployment.yaml
+        git commit -m "Update deployment.yaml with image version ${{ github.sha }}"
+        git push origin dev
