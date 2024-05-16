@@ -63,6 +63,8 @@ jobs:
           propertyPath: 'spec.template.spec.containers.image'
           value: ryaanm/hello-world:$(git rev-parse --short HEAD)
           branch: dev
+          masterBranchName: main
           # targetBranch: development
           createPR: false
+          commitChange: true
           message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
