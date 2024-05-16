@@ -16,7 +16,9 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.14.2
+        image: "ryaanm/hello-world:latest"
+        ports:
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -28,7 +30,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80
   selector:
     app: nginx
 
