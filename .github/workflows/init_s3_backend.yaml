@@ -8,9 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      pull-requests: write
       statuses: write
-      actions: read
       contents: read
     env:
       BUCKET_NAME: remote-rayen-tfstate
