@@ -5,7 +5,7 @@ name: Build and Deploy
 #     branches:
 #       - dev
 
-on:
+on: 
   workflow_dispatch:
 
 jobs:
@@ -45,31 +45,18 @@ jobs:
       run: docker push ryaanm/hello-world:$(git rev-parse --short HEAD)
       working-directory: ./app
 
-    # - name: Update deployment.yaml with new image version
-    #   run: |
-    #     ls
-    #     cd kube_manifest/ && sed -i "s|image: ryaanm/hello-world:.*|image: ryaanm/hello-world:$(git rev-parse --short HEAD)|" deployment.yaml
-    #     git config --global user.name 'github-actions[bot]'
-    #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-    #     git add deployment.yaml
-    #     git commit -m "Update deployment.yaml with image version $(git rev-parse --short HEAD)"
-    #     git push origin dev
-    #   working-directory: .
+    - name: Update deployment.yaml with new image version
+      run: |
+        ls
+        cd kube_manifest/ && sed -i "s|image: ryaanm/hello-world:.*|image: ryaanm/hello-world:$(git rev-parse --short HEAD)|" deployment.yaml
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add deployment.yaml
+        git commit -m "Update deployment.yaml with image version $(git rev-parse --short HEAD)"
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:dev
+      working-directory: .
 
-    - name: YAML Update Action
-      uses: fjogeleit/yaml-update-action@v0.14.0
-      with:
-          valueFile: './kube_manifest/deployment.yaml'
-          propertyPath: 'spec.template.spec.containers[0].image'
-          value: ryaanm/hello-world:$(git rev-parse --short HEAD)
-          branch: dev
-          force: true
-          masterBranchName: main
-          targetBranch: dev
-          createPR: false
-          commitChange: true
-          message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
-          token: ${{github.auth}}
+
 
 
          
