@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: ryaanm/hello-world:1
+        image: ryaanm/hello-world:6edc67c
         ports:
         - containerPort: 80
 ---
