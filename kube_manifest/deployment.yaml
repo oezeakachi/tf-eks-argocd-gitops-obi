@@ -15,7 +15,7 @@ spec:
         app: java-app
     spec:
       containers:
-      - name: java-app
+      - name: nginx
         image: ryaanm/hello-world:be56557
         ports:
         - containerPort: 80
