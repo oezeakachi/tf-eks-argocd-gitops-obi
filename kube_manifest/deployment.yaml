@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: java-app
-        image: ryaanm/hello-world:6bb1415
+        image: ryaanm/hello-world:be56557
         ports:
         - containerPort: 80
 ---
