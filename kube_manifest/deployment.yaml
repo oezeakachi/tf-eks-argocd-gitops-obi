@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: java-app
   labels:
-    app: nginx
+    app: java-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nginx
+      app: java-app
   template:
     metadata:
       labels:
-        app: nginx
+        app: java-app
     spec:
       containers:
-      - name: nginx
+      - name: java-app
         image: ryaanm/hello-world:6bb1415
         ports:
         - containerPort: 80
@@ -32,6 +32,6 @@ spec:
   - port: 8080
     targetPort: 80
   selector:
-    app: nginx
+    app: java-app
 
 
