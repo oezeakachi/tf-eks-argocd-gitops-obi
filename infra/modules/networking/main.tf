@@ -8,6 +8,13 @@ resource "aws_vpc" "eks_vpc" {
   }
 }
 
+# Create Internet Gateway
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.eks_vpc.id
+  tags = {
+    Name = "eks_igw"
+  }
+}
 # Create Elastic IPs for NAT Gateways
 resource "aws_eip" "nat_eip" {
   for_each = aws_subnet.public
