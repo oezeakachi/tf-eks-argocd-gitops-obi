@@ -1,6 +1,6 @@
 # Security group for the EKS cluster
 resource "aws_security_group" "eks_cluster_sg" {
-  name        = "eks_cluster_sg"
+  name        = "eks-cluster-sg"
   description = "Security group for EKS cluster"
   vpc_id      = var.vpc_id
 }
@@ -67,7 +67,7 @@ resource "kubernetes_config_map" "aws_auth" {
 # EKS Node Group
 resource "aws_eks_node_group" "node_group" {
   cluster_name    = aws_eks_cluster.cluster.name
-  node_group_name = "eks_node_group"
+  node_group_name = "eks-node-group"
   node_role_arn   = var.eks_node_role_arn
   subnet_ids      = var.private_subnet_ids
   scaling_config {

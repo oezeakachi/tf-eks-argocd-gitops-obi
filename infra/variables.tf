@@ -31,7 +31,7 @@ variable "availability_zones" {
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "eks_cluster"
+  default     = "eks-cluster"
 }
 
 # Desired number of nodes in the EKS node group

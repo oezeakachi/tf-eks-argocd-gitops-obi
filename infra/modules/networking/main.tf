@@ -5,7 +5,7 @@ resource "aws_vpc" "eks_vpc" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
-    Name = "eks_vpc"
+    Name = "eks-vpc"
   }
 }
 
@@ -13,7 +13,7 @@ resource "aws_vpc" "eks_vpc" {
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.eks_vpc.id
   tags = {
-    Name = "eks_igw"
+    Name = "eks-igw"
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_subnet" "public" {
   availability_zone       = element(var.availability_zones, each.key)
   map_public_ip_on_launch = true
   tags = {
-    Name = "eks_public_subnet_${each.key}"
+    Name = "eks-public-subnet-${each.key}"
   }
 }
 
@@ -37,7 +37,7 @@ resource "aws_subnet" "private" {
   availability_zone       = element(var.availability_zones, each.key)
   map_public_ip_on_launch = false
   tags = {
-    Name = "eks_private_subnet_${each.key}"
+    Name = "eks-private-subnet-${each.key}"
   }
 }
 
@@ -45,7 +45,7 @@ resource "aws_subnet" "private" {
 resource "aws_eip" "nat_eip" {
   for_each = aws_subnet.public
   tags = {
-    Name = "nat_eip_${each.key}"
+    Name = "nat-eip-${each.key}"
   }
 }
 
@@ -55,7 +55,7 @@ resource "aws_nat_gateway" "nat_gw" {
   allocation_id = aws_eip.nat_eip[each.key].id
   subnet_id     = each.value.id
   tags = {
-    Name = "nat_gw_${each.key}"
+    Name = "nat-gw-${each.key}"
   }
 }
 
@@ -67,7 +67,7 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.igw.id
   }
   tags = {
-    Name = "eks_public_routetable"
+    Name = "eks-public-routetable"
   }
 }
 
@@ -83,7 +83,7 @@ resource "aws_route_table" "private" {
   for_each = aws_subnet.private
   vpc_id = aws_vpc.eks_vpc.id
   tags = {
-    Name = "eks_private_routetable_${each.key}"
+    Name = "eks-private-routetable-${each.key}"
   }
 }
 
