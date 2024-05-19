@@ -1,12 +1,12 @@
 name: Build and Deploy
 
-on:
-  push:
-    branches:
-      - dev
+# on:
+#   push:
+#     branches:
+#       - dev
 
-# on: 
-#   workflow_dispatch:
+on: 
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
