@@ -11,7 +11,7 @@ resource "aws_eks_cluster" "cluster" {
   role_arn = var.role_arn
   vpc_config {
     security_group_ids = [aws_security_group.eks_cluster_sg.id]
-    subnet_ids         = var.subnet_ids
+    subnet_ids         = var.private_subnet_ids
   }
   depends_on = [
     var.eks_cluster_policy,
@@ -69,7 +69,7 @@ resource "aws_eks_node_group" "node_group" {
   cluster_name    = aws_eks_cluster.cluster.name
   node_group_name = "eks_node_group"
   node_role_arn   = var.eks_node_role_arn
-  subnet_ids      = var.subnet_ids
+  subnet_ids      = var.private_subnet_ids
   scaling_config {
     desired_size = var.desired_nodes
     max_size     = var.max_nodes
