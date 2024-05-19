@@ -101,4 +101,3 @@ resource "aws_route_table_association" "private_rta" {
   subnet_id = each.value.id
   route_table_id = aws_route_table.private[each.key].id
 }
-
