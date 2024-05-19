@@ -25,16 +25,6 @@ resource "aws_nat_gateway" "nat_gw" {
   }
 }
 
-# Create NAT Gateways
-resource "aws_nat_gateway" "nat_gw" {
-  for_each      = aws_subnet.public
-  allocation_id = aws_eip.nat_eip[each.key].id
-  subnet_id     = each.value.id
-  tags = {
-    Name = "nat_gw_${each.key}"
-  }
-}
-
 # Create Public Subnets
 resource "aws_subnet" "public" {
   for_each = toset(var.public_subnet_cidrs)
