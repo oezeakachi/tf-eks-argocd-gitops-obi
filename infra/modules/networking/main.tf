@@ -8,18 +8,20 @@ resource "aws_vpc" "eks_vpc" {
   }
 }
 
-# Create Internet Gateway
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.eks_vpc.id
-  tags = {
-    Name = "eks_igw"
-  }
-}
 # Create Elastic IPs for NAT Gateways
 resource "aws_eip" "nat_eip" {
-  for_each = toset(var.public_subnet_cidrs)
+  for_each = aws_subnet.public
   tags = {
     Name = "nat_eip_${each.key}"
+  }
+}
+# Create NAT Gateways
+resource "aws_nat_gateway" "nat_gw" {
+  for_each      = aws_subnet.public
+  allocation_id = aws_eip.nat_eip[each.key].id
+  subnet_id     = each.value.id
+  tags = {
+    Name = "nat_gw_${each.key}"
   }
 }
 
@@ -78,13 +80,17 @@ resource "aws_route_table_association" "public_rta" {
 # Create Route Table for Private Subnets
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.eks_vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = element(aws_nat_gateway.nat_gw[*].id, index(var.private_subnet_cidrs, each.value.cidr_block) % length(aws_nat_gateway.nat_gw))
-  }
   tags = {
     Name = "eks_private_routetable"
   }
+}
+
+# Create Routes for Private Subnet Route Table
+resource "aws_route" "private" {
+  for_each      = aws_subnet.private
+  route_table_id = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id = element(aws_nat_gateway.nat_gw[*].id, each.key % length(aws_nat_gateway.nat_gw))
 }
 
 # Associate Route Table with Private Subnets
