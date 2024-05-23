@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "igw" {
 
 # Create Public Subnets
 resource "aws_subnet" "public" {
-  for_each = { for idx, cidr in var.public_subnet_cidrs : idx => cidr }
+  for_each                = { for idx, cidr in var.public_subnet_cidrs : idx => cidr }
   vpc_id                  = aws_vpc.eks_vpc.id
   cidr_block              = each.value
   availability_zone       = element(var.availability_zones, each.key)
@@ -31,7 +31,7 @@ resource "aws_subnet" "public" {
 
 # Create Private Subnets
 resource "aws_subnet" "private" {
-  for_each = { for idx, cidr in var.private_subnet_cidrs : idx => cidr }
+  for_each                = { for idx, cidr in var.private_subnet_cidrs : idx => cidr }
   vpc_id                  = aws_vpc.eks_vpc.id
   cidr_block              = each.value
   availability_zone       = element(var.availability_zones, each.key)
@@ -73,15 +73,15 @@ resource "aws_route_table" "public" {
 
 # Associate Route Table with Public Subnets
 resource "aws_route_table_association" "public_rta" {
-  for_each      = aws_subnet.public
-  subnet_id     = each.value.id
+  for_each       = aws_subnet.public
+  subnet_id      = each.value.id
   route_table_id = aws_route_table.public.id
 }
 
 # Create Route Table for Private Subnets
 resource "aws_route_table" "private" {
   for_each = aws_subnet.private
-  vpc_id = aws_vpc.eks_vpc.id
+  vpc_id   = aws_vpc.eks_vpc.id
   tags = {
     Name = "eks-private-routetable-${each.key}"
   }
@@ -89,15 +89,15 @@ resource "aws_route_table" "private" {
 
 # Create Routes for Private Subnet Route Table
 resource "aws_route" "private" {
-  for_each = aws_subnet.private
-  route_table_id = aws_route_table.private[each.key].id
+  for_each               = aws_subnet.private
+  route_table_id         = aws_route_table.private[each.key].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id = aws_nat_gateway.nat_gw[tonumber(each.key) % length(aws_nat_gateway.nat_gw)].id
+  nat_gateway_id         = aws_nat_gateway.nat_gw[tonumber(each.key) % length(aws_nat_gateway.nat_gw)].id
 }
 
 # Associate Route Table with Private Subnets
 resource "aws_route_table_association" "private_rta" {
-  for_each = aws_subnet.private
-  subnet_id = each.value.id
+  for_each       = aws_subnet.private
+  subnet_id      = each.value.id
   route_table_id = aws_route_table.private[each.key].id
 }

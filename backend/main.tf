@@ -1,3 +1,4 @@
+# Create S3 Bucket
 resource "aws_s3_bucket" "backend" {
   bucket = var.bucket_name
 
@@ -7,6 +8,7 @@ resource "aws_s3_bucket" "backend" {
   }
 }
 
+# Enable versioning on S3
 resource "aws_s3_bucket_versioning" "versioning" {
   bucket = aws_s3_bucket.backend.id
 
@@ -15,6 +17,7 @@ resource "aws_s3_bucket_versioning" "versioning" {
   }
 }
 
+# Set up lifecycle rule
 resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
   bucket = aws_s3_bucket.backend.id
 

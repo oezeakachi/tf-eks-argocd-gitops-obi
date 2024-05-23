@@ -33,7 +33,7 @@ module "eks" {
   eks_cluster_policy          = module.roles.eks_cluster_policy
   eks_vpc_resource_controller = module.roles.eks_vpc_resource_controller
   rta                         = module.networking.private_rta[*]
-  private_subnet_ids = module.networking.subnet_ids
+  private_subnet_ids          = module.networking.subnet_ids
   depends_on = [module.roles,
     module.networking
   ]
