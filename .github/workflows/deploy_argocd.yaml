@@ -35,5 +35,3 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./argocd
       
-
- 
