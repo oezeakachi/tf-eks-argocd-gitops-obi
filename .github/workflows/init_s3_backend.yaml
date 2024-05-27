@@ -8,9 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      pull-requests: write
       statuses: write
-      actions: read
       contents: read
     env:
       BUCKET_NAME: remote-rayen-tfstate
@@ -56,12 +54,12 @@ jobs:
       
       - name: Validate
         id: validate
-        run: terraform validate -no-color
+        run: terraform validate
       
       - name: Plan 
         id: plan
         if: env.BUCKET_EXISTS == 'false'
-        run: terraform plan -no-color -input=false
+        run: terraform plan -input=false
         working-directory: ./backend 
         continue-on-error: true
 

@@ -43,10 +43,3 @@ jobs:
               TF_VAR_iam_user: ${{ secrets.IAM_USER }}
             working-directory: ./infra
           
-          - name: Capture EKS Cluster Name
-            run: |
-              output=$(terraform output -json)
-              echo "CLUSTER_NAME=$(echo "$output" | jq -r '.cluster_name.value')" >> $GITHUB_ENV
-            working-directory: ./infra
-
-          

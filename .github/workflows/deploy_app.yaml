@@ -1,16 +1,15 @@
 name: Build and Deploy
 
-# on:
-#   push:
-#     branches:
-#       - dev
-
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout code
@@ -23,7 +22,7 @@ jobs:
         java-version: '17'
 
     - name: Build with Maven
-      run: ./mvnw clean package
+      run: chmod +x mvnw && ./mvnw clean package
       working-directory: ./app
 
     - name: Log in to Docker Hub
@@ -34,22 +33,29 @@ jobs:
       
 
     - name: Build Docker image
-      run: docker build -t hello-world:latest .
+      run: docker build -t ryaanm/hello-world:latest .
       working-directory: ./app
 
     - name: Tag Docker image with GitHub SHA
-      run: docker tag hello-world:latest hello-world:${{ github.sha }}
+      run: docker tag ryaanm/hello-world:latest ryaanm/hello-world:$(git rev-parse --short HEAD)
       working-directory: ./app
 
     - name: Push Docker image
-      run: docker push hello-world:${{ github.sha }}
+      run: docker push ryaanm/hello-world:$(git rev-parse --short HEAD)
       working-directory: ./app
 
-    # - name: Update deployment.yaml with new image version
-    #   run: |
-    #     sed -i "s|image: ryaanm/hello-world:.*|image: ryaanm/hello-world:${{ github.sha }}|" ./kube_manifest/deployment.yaml
-    #     git config --global user.name 'github-actions[bot]'
-    #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-    #     git add deployment.yaml
-    #     git commit -m "Update deployment.yaml with image version ${{ github.sha }}"
-    #     git push origin dev
+    - name: Update deployment.yaml with new image version
+      run: |
+        ls
+        cd kube_manifest/ && sed -i "s|image: ryaanm/hello-world:.*|image: ryaanm/hello-world:$(git rev-parse --short HEAD)|" deployment.yaml
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add deployment.yaml
+        git commit -m "Update deployment.yaml with image version $(git rev-parse --short HEAD)"
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+      working-directory: .
+
+
+
+
+         

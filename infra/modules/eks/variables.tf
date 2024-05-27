@@ -46,8 +46,8 @@ variable "role_arn" {
 }
 
 # SUBNET ID 
-variable "subnet_ids" {
-  description = "SUBNET IDS"
+variable "private_subnet_ids" {
+  description = "PRIVATE SUBNET IDS"
   type        = any
 }
 

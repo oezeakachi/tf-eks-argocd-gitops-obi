@@ -3,5 +3,5 @@ terraform {
     bucket = "remote-rayen-tfstate"
     key    = "infra/terraform.tfstate"
     region = "eu-west-1"
-   }
+  }
 }
