@@ -15,7 +15,7 @@ spec:
         app: java-app
     spec:
       containers:
-      - name: nginx
+      - name: hello-world
         image: ryaanm/hello-world:3c0a52b
         ports:
         - containerPort: 8080
@@ -33,4 +33,3 @@ spec:
     targetPort: 8080
   selector:
     app: java-app
-
