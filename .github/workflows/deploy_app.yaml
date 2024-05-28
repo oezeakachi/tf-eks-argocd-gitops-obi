@@ -54,8 +54,3 @@ jobs:
         git commit -m "Update deployment.yaml with image version $(git rev-parse --short HEAD)"
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
       working-directory: .
-
-
-
-
-         
