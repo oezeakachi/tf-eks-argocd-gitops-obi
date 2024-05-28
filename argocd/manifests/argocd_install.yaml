@@ -10,3 +10,4 @@ repoServer:
   replicas: 1
 applicationSet:
   replicaCount: 1
+  
