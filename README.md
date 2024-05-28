@@ -59,4 +59,4 @@ mvn spring-boot:run
 ```
 
 ## Note: 
-This project is for dev & testing purposes, ensure to terminate AWS resources upon completion to prevent any additional charges.
+This project is for dev & testing purposes, ensure to destroy AWS resources upon completion to prevent any additional charges.
