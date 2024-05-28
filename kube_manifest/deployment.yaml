@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: ryaanm/hello-world:a7e7426
+        image: ryaanm/hello-world:8ea954f
         ports:
         - containerPort: 8080
 ---
