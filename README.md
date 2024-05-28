@@ -31,11 +31,11 @@ This project demonstrates how to deploy and manage a Spring Boot application usi
 
 
 ## Workflow Steps:
-1- Configure remote terraform backend (init_s3_backend.yaml)
-2- Deploy AWS infrastructure (deploy_infra.yaml)
-3- Configure ArgoCD (deploy_argocd.yaml)
-4- Deploy Spring Boot Application (deploy_argocd_app.yaml)
-5- CI/CD pipeline for Spring Boot Application (deploy_app.yaml)
+1- Configure remote terraform backend (init_s3_backend.yaml)  
+2- Deploy AWS infrastructure (deploy_infra.yaml)  
+3- Configure ArgoCD (deploy_argocd.yaml)  
+4- Deploy Spring Boot Application (deploy_argocd_app.yaml)  
+5- CI/CD pipeline for Spring Boot Application (deploy_app.yaml)  
 
 ## Local setup:
 To test the Spring Boot application locally:
