@@ -17,19 +17,15 @@ This project demonstrates how to deploy and manage a Spring Boot application usi
 | Secret Name       | Type     | Description                                |
 |-------------------|----------|--------------------------------------------|
 | `AWS_ACCOUNT_ID`  | `string` | User's AWS Account ID or ARN.              |
-
 | Secret Name       | Type     | Description                                |
 |-------------------|----------|--------------------------------------------|
 | `IAM_USER`        | `string` | Name of the IAM user.                      |
-
 | Secret Name       | Type     | Description                                |
 |-------------------|----------|--------------------------------------------|
 | `PIPELINE_ROLE`   | `string` | ARN of the OIDC Role configured in AWS.   |
-
 | Secret Name       | Type     | Description                                |
 |-------------------|----------|--------------------------------------------|
 | `DOCKER_USERNAME` | `string` | DockerHub account username.                |
-
 | Secret Name       | Type     | Description                                |
 |-------------------|----------|--------------------------------------------|
 | `DOCKER_PASSWORD` | `string` | DockerHub account password.                |
@@ -39,7 +35,6 @@ This project demonstrates how to deploy and manage a Spring Boot application usi
 | Secret Name       | Type     | Description                                |
 |-------------------|----------|--------------------------------------------|
 | `BUCKET_NAME`     | `string` | S3 bucket name for initializing the S3 backend. (Used in the `init_s3_backend.yaml` workflow) |
-
 | Secret Name       | Type     | Description                                |
 |-------------------|----------|--------------------------------------------|
 | `CLUSTER_NAME`    | `string` | Name of the EKS cluster (must match the configuration in Terraform). Used in the `deploy_argocd_app.yaml` workflow. |
