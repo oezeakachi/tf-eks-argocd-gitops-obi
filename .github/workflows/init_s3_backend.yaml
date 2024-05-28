@@ -26,7 +26,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
       
       - name: Check if S3 Bucket Exists
-        id: check-bucket
         run: |
           if aws s3 ls "s3://${{ env.BUCKET_NAME }}" 2>&1 | grep -q 'NoSuchBucket'; then
             echo "S3 Bucket does not exist"
@@ -43,7 +42,6 @@ jobs:
         working-directory: .
       
       - name: Format code
-        id: fmt
         run: terraform fmt -check
         continue-on-error: true
 
@@ -53,11 +51,9 @@ jobs:
         working-directory: ./backend
       
       - name: Validate
-        id: validate
         run: terraform validate
       
       - name: Plan 
-        id: plan
         if: env.BUCKET_EXISTS == 'false'
         run: terraform plan -input=false
         working-directory: ./backend 
