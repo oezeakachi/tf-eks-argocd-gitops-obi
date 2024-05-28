@@ -32,4 +32,3 @@ provider "helm" {
     token                  = data.terraform_remote_state.infra.outputs.cluster_auth_token
   }
 }
-

@@ -16,7 +16,3 @@ output "eks_cluster_policy" {
 output "eks_vpc_resource_controller" {
   value = aws_iam_role_policy_attachment.eks_vpc_resource_controller.id
 }
-
-
-
-

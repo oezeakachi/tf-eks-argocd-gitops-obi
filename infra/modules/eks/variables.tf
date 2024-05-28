@@ -88,5 +88,3 @@ variable "eks_node_role_arn" {
   description = "EKS CLUSTER ROLE ARN"
   type        = string
 }
-
-
