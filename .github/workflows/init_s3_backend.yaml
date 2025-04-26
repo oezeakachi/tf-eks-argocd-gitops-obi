@@ -11,7 +11,7 @@ jobs:
       statuses: write
       contents: read
     env:
-      BUCKET_NAME: remote-rayen-tfstate
+      BUCKET_NAME: remote-tfstate-obi
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
