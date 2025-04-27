@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/rayen-org/tf-eks-argocd.git'
+    repoURL: 'https://github.com/oezeakachi/tf-eks-argocd-gitops-obi.git'
     path: ./kube_manifest
     targetRevision: main
   destination:
