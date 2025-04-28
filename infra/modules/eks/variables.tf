@@ -16,6 +16,11 @@ variable "cluster_name" {
   default     = "dev"
 }
 
+variable "github_oidc_role_arn" {
+  description = "IAM Role ARN assumed by GitHub Actions via OIDC"
+  type        = string
+}
+
 # Desired number of nodes in the EKS node group
 variable "desired_nodes" {
   description = "Desired number of nodes in the node group"
